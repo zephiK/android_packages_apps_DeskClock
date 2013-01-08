@@ -59,6 +59,10 @@ public class SettingsActivity extends PreferenceActivity
             "snooze_duration";
     public static final String KEY_VOLUME_BEHAVIOR =
             "volume_button_setting";
+    public static final String KEY_FLIP_ACTION =
+            "flip_action";
+    public static final String KEY_SHAKE_ACTION =
+            "shake_action";
     public static final String KEY_AUTO_SILENCE =
             "auto_silence";
     public static final String KEY_CLOCK_STYLE =
@@ -187,11 +191,18 @@ public class SettingsActivity extends PreferenceActivity
             final ListPreference listPref = (ListPreference) pref;
             final int idx = listPref.findIndexOfValue((String) newValue);
             listPref.setSummary(listPref.getEntries()[idx]);
+
         } else if (KEY_SHOW_STATUS_BAR_ICON.equals(pref.getKey())) {
             // Check if any alarms are active. If yes and
             // we allow showing the alarm icon, the icon will be shown.
             Settings.System.putInt(getContentResolver(), Settings.System.SHOW_ALARM_ICON,
                     (Boolean) newValue ? 1 : 0);
+        } else if (KEY_FLIP_ACTION.equals(pref.getKey())) {
+            final ListPreference listPref = (ListPreference) pref;
+            updateActionSummary(listPref, (String) newValue, R.string.flip_action_summary);
+        } else if (KEY_SHAKE_ACTION.equals(pref.getKey())) {
+            final ListPreference listPref = (ListPreference) pref;
+            updateActionSummary(listPref, (String) newValue, R.string.shake_action_summary);
         }
         return true;
     }
@@ -217,6 +228,11 @@ public class SettingsActivity extends PreferenceActivity
         sendBroadcast(i);
     }
 
+    private void updateActionSummary(ListPreference listPref, String action, int summaryResId) {
+        int i = listPref.findIndexOfValue(action);
+        listPref.setSummary(getString(summaryResId,
+            getResources().getStringArray(R.array.action_summary_entries)[i]));
+    }
 
     private void refresh() {
         ListPreference listPref = (ListPreference) findPreference(KEY_AUTO_SILENCE);
@@ -242,6 +258,14 @@ public class SettingsActivity extends PreferenceActivity
 
         SwitchPreference hideStatusbarIcon = (SwitchPreference) findPreference(KEY_SHOW_STATUS_BAR_ICON);
         hideStatusbarIcon.setOnPreferenceChangeListener(this);
+
+        listPref = (ListPreference) findPreference(KEY_FLIP_ACTION);
+        updateActionSummary(listPref, listPref.getValue(), R.string.flip_action_summary);
+        listPref.setOnPreferenceChangeListener(this);
+
+        listPref = (ListPreference) findPreference(KEY_SHAKE_ACTION);
+        updateActionSummary(listPref, listPref.getValue(), R.string.shake_action_summary);
+        listPref.setOnPreferenceChangeListener(this);
 
         SnoozeLengthDialog snoozePref = (SnoozeLengthDialog) findPreference(KEY_ALARM_SNOOZE);
         snoozePref.setSummary();
