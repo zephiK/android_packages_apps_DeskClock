@@ -15,6 +15,9 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Setting labels on Set alarm screen: Increasing volume on or off -->
+    <string name="alarm_increasing_volume">Increasing volume</string>
+
     <!-- Setting title for the flip action setting. -->
     <string name="flip_action_title">Flip action</string>
 
