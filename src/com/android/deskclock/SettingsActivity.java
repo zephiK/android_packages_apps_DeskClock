@@ -27,6 +27,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.text.format.DateUtils;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.view.Menu;
