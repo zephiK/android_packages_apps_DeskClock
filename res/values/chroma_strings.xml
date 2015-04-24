@@ -45,4 +45,6 @@
     <!-- Setting labels on Set alarm screen: Increasing volume on or off -->
     <string name="alarm_increasing_volume">Increasing volume</string>
 
+    <string name="menu_item_widget_settings">Widget settings</string>
+    <string name="activity_not_found">Activity not found!</string>
 </resources>
